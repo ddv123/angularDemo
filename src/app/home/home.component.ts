@@ -26,18 +26,23 @@ import { DataService } from '../data.service';
   					style({opacity: .5, transform: 'translateY(35px)', offset: .3}),
   					style({opacity: 0, transform: 'translateY(-75%)', offset: 1}),
   				]))
-  			]),  {optional: true})
+  			]),  {optional: true}),
   		])
   	])
+
+
+    
+       
 
 
   ]
 })
 export class HomeComponent implements OnInit {
 
+  state: string = 'false';
   itemCount: number;
   btnText: string = "Add an item";
-  goalText: string = 'My first life goal';
+  goalText: string = 'My first goal for today';
   goals=[];
 
   constructor(private _data: DataService) { }
@@ -50,10 +55,16 @@ export class HomeComponent implements OnInit {
   }
 
   addItem() {
+    if (!this.goalText){
+    
+      return;
+    }
     this.goals.push(this.goalText);
     this.goalText = '';
     this.itemCount = this.goals.length;
     this._data.changeGoal(this.goals);
+
+
   }
 
   removeItem(i) {
@@ -61,5 +72,6 @@ export class HomeComponent implements OnInit {
   	this.itemCount = this.goals.length;
   	this._data.changeGoal(this.goals);
   }
+
 
 }
